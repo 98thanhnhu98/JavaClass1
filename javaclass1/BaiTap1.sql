@@ -135,14 +135,12 @@ insert into HuongDan values(6,'Vu',5172,0)
 insert into HuongDan values(7,'So1',9316,null)
 insert into HuongDan values(8,'So1',9316,null)
 --cau 3 Cho biết mã số, họ tên, tên khoa của các giảng viên hướng dẫn từ 3 sinh viên trở lên.  (DONE)
-SELECT DISTINCT GiangVien.magv,GiangVien.hotengv,Khoa.tenkhoa FROM GiangVien 
+SELECT distinct HuongDan.magv,GiangVien.hotengv,Khoa.tenkhoa FROM GiangVien 
 join HuongDan on GiangVien.magv = HuongDan.magv
 join Khoa on GiangVien.makhoa = Khoa.makhoa
-WHERE GiangVien.magv IN (
-SELECT HuongDan.magv
-FROM HuongDan HD
-GROUP BY HD.magv
-HAVING COUNT(HD.masv) > 3)
+WHERE GiangVien.magv IN (SELECT HuongDan.magv FROM HuongDan
+GROUP BY magv
+HAVING COUNT(masv) > 3)
 --cau 4 Cho biết mã số, tên đề tài của đề tài có kinh phí cao nhất  (DONE)
 select madt,tendt,kinhphi from DeTai  
 where kinhphi in ( select MAX(kinhphi) from DeTai)
